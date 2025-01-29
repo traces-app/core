@@ -4,4 +4,6 @@ from .models import user
 
 # Register your models here.
 admin.site.register(user.User)
-admin.site.register(user.Role)
+admin.site.register(user.StandardUser)
+admin.site.register(user.MerchantAdministrator)
+admin.site.register(user.LogisticsAdministrator)
