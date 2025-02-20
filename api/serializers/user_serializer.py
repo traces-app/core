@@ -62,19 +62,23 @@ class BaseUserSerializer(serializers.ModelSerializer):
 
 
 class StandardUserSerializer(BaseUserSerializer):
+    # firebase_uid = serializers.CharField(read_only=True)
     class Meta(BaseUserSerializer.Meta): 
         model = StandardUser
-        fields = ['email', 'password', 'firebase_token', 'first_name', 'last_name', ]
+        fields = ['role', 'id', 'email', 'password', 'firebase_token', 'first_name', 'last_name', 'creation_date']
+        read_only_fields = ['id', 'creation_date']
 
 class MerchantAdministratorSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta): 
         model = MerchantAdministrator
-        fields = ['email', 'password', 'firebase_token', 'business_name', ]
+        fields = ['role', 'id', 'email', 'password', 'firebase_token', 'business_name', 'creation_date' ]
+        read_only_fields = ['id', 'creation_date']
 
 class LogisticsAdministratorSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta): 
         model = LogisticsAdministrator
-        fields = ['email', 'password', 'firebase_token', 'logistics_name', ]
+        fields = ['role', 'id', 'email', 'password', 'firebase_token', 'logistics_name', 'creation_date', ]
+        read_only_fields = ['id', 'creation_date']
 
 class DriverSerializer(BaseUserSerializer):
     first_name = serializers.CharField(source='driver_first_name')
@@ -86,4 +90,5 @@ class DriverSerializer(BaseUserSerializer):
 
     class Meta(BaseUserSerializer.Meta): 
         model = Driver 
-        fields = ['email', 'password', 'firebase_token', 'first_name', 'last_name', 'logistics_id', ]
+        fields = ['role', 'id', 'email', 'password', 'firebase_token', 'logistics_id', 'first_name', 'last_name', 'creation_date', ]
+        read_only_fields = ['id', 'creation_date']

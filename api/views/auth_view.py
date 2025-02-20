@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from firebase_admin import auth
 from django.contrib.auth import get_user_model
+from api.models.user import StandardUser, MerchantAdministrator, LogisticsAdministrator, Driver
 from api.serializers.user_serializer import StandardUserSerializer, MerchantAdministratorSerializer, LogisticsAdministratorSerializer, DriverSerializer 
 
 
@@ -119,3 +120,26 @@ class CreateUserView(APIView):
             "last_name" "something", 
         }
     """
+
+
+from rest_framework.permissions import IsAuthenticated
+
+class UserInfoView(APIView): 
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        user = request.user 
+        match str(user.role).lower(): 
+            case "standard":  
+                user = StandardUser.objects.get(id=user.id)
+                serializer = StandardUserSerializer(user)
+            case "merchant":  
+                user = MerchantAdministrator.objects.get(id=user.id)
+                serializer = MerchantAdministratorSerializer(user)
+            case "logistics":  
+                user = LogisticsAdministrator.objects.get(id=user.id)
+                serializer = LogisticsAdministratorSerializer(user)
+            case "driver":  
+                user = Driver.objects.get(id=user.id)
+                serializer = DriverSerializer(user)
+        return Response(serializer.data)
