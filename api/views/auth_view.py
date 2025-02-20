@@ -33,12 +33,14 @@ class Authenticate(TokenObtainPairView):
                 "access": str(refresh.access_token),
                 "refresh": str(refresh),
             }, status=status.HTTP_200_OK)
+        else: 
+            return Response({"detail": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
             
 
     def password_login(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
-        
+
         return authenticate(request, email=email, password=password)
 
     def firebase_login(self, request): 
