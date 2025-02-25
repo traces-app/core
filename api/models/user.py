@@ -41,6 +41,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
+    def is_standard(self): 
+        return self.role == self.Role.STANDARD
+    def is_merchant(self): 
+        return self.role == self.Role.MERCHANT
+    def is_logistics(self): 
+        return self.role == self.Role.LOGISTICS
+    def is_driver(self): 
+        return self.role == self.Role.DRIVER
+
+
     def save(self, *args, **kwargs):
         """
         Assigns the base role on first save.
