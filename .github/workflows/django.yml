@@ -43,8 +43,10 @@ jobs:
         run: echo "Environment variables set"
 
       - name: Check Django Environment Variables
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
         run: |
-          python -c "import os; print(os.environ.get('FIREBASE_PRIVATE_KEY_ID', 'NOT SET'))"
+          python -c "import os; print('FIREBASE_PROJECT_ID:', os.environ.get('FIREBASE_PROJECT_ID', 'NOT SET'))"
 
       - name: Run Tests
         run: |
