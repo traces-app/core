@@ -194,16 +194,16 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 cred = credentials.Certificate({
   "type": "service_account",
-  "project_id": env("FIREBASE_PROJECT_ID"),
-  "private_key_id": env("FIREBASE_PRIVATE_KEY_ID"),
-  "private_key": env("FIREBASE_PRIVATE_KEY").replace('\\n', '\n'),
-  "client_email": env("FIREBASE_CLIENT_EMAIL"),
-  "client_id": env("FIREBASE_CLIENT_ID"),
-  "auth_uri": env("FIREBASE_AUTH_URI"),
-  "token_uri": env("FIREBASE_TOKEN_URI"),
-  "auth_provider_x509_cert_url": env("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"),
-  "client_x509_cert_url": env("FIREBASE_CLIENT_X509_CERT_URL"),
-  "universe_domain": env("FIREBASE_UNIVERSE_DOMAIN"),
+  "project_id": os.environ.get("FIREBASE_PROJECT_ID"),
+  "private_key_id": os.environ.get("FIREBASE_PRIVATE_KEY_ID"),
+  "private_key": os.environ.get("FIREBASE_PRIVATE_KEY").replace('\\n', '\n'),
+  "client_email": os.environ.get("FIREBASE_CLIENT_EMAIL"),
+  "client_id": os.environ.get("FIREBASE_CLIENT_ID"),
+  "auth_uri": os.environ.get("FIREBASE_AUTH_URI"),
+  "token_uri": os.environ.get("FIREBASE_TOKEN_URI"),
+  "auth_provider_x509_cert_url": os.environ.get("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"),
+  "client_x509_cert_url": os.environ.get("FIREBASE_CLIENT_X509_CERT_URL"),
+  "universe_domain": os.environ.get("FIREBASE_UNIVERSE_DOMAIN"),
 })
 
 firebase_admin.initialize_app(cred)
