@@ -42,6 +42,10 @@ jobs:
           FIREBASE_UNIVERSE_DOMAIN: ${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}
         run: echo "Environment variables set"
 
+      - name: Check Django Environment Variables
+        run: |
+          python -c "import os; print(os.environ.get('FIREBASE_PRIVATE_KEY_ID', 'NOT SET'))"
+
       - name: Run Tests
         run: |
           python manage.py test
