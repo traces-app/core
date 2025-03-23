@@ -3,7 +3,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from api.views.auth_view import Authenticate, CreateUserView, UserInfoView
+from api.views.auth_view import Authenticate, CreateUserView, UserInfoView, check_email_availability
 
 urlpatterns = [
     path('info/', UserInfoView.as_view(), name='user_information'),
@@ -12,4 +12,6 @@ urlpatterns = [
 
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+
+    path('email-availability/', check_email_availability, name='check_email_availability')
 ]

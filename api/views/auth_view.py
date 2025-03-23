@@ -8,6 +8,7 @@ from firebase_admin import auth
 from django.contrib.auth import get_user_model
 from api.models.user import StandardUser, MerchantAdministrator, LogisticsAdministrator, Driver
 from api.serializers.user_serializer import StandardUserSerializer, MerchantAdministratorSerializer, LogisticsAdministratorSerializer, DriverSerializer 
+from rest_framework.decorators import api_view
 
 
 User = get_user_model()
@@ -145,3 +146,19 @@ class UserInfoView(APIView):
                 user = Driver.objects.get(id=user.id)
                 serializer = DriverSerializer(user)
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def check_email_availability(request): 
+    email = request.GET.get('email', None)
+    
+    if not email: 
+        return Response({'detail': 'Email parameter is required'})
+
+    # check if the email is taken 
+    email_exists = User.objects.filter(email=email).exists() 
+
+    return Response({
+        'availability': not email_exists,
+        'detail':  'Email is available' if not email_exists else 'Email is already taken'
+    })
